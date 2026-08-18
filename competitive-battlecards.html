@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizen Enterprise - Competitive Battlecards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: #fafafa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #000;
+            color: #fff;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #999;
+            font-size: 1rem;
+        }
+
+        .accent {
+            color: #ff0055;
+        }
+
+        .controls {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn, .action-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #ddd;
+            background: #fff;
+            color: #333;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .action-btn:hover {
+            border-color: #ff0055;
+            color: #ff0055;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 0, 85, 0.15);
+        }
+
+        .filter-btn.active {
+            background: #ff0055;
+            color: #fff;
+            border-color: #ff0055;
+        }
+
+        .action-btn {
+            border-color: #000;
+            color: #000;
+        }
+
+        .action-btn:hover {
+            background: #000;
+            color: #fff;
+            border-color: #000;
+        }
+
+        .shortcuts {
+            margin-left: auto;
+            font-size: 0.85rem;
+            color: #666;
+            padding: 0.5rem;
+        }
+
+        .shortcuts kbd {
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.2rem 0.5rem;
+            font-family: monospace;
+            font-size: 0.8rem;
+            margin: 0 0.25rem;
+        }
+
+        .cards-container {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .battlecard {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .battlecard.hidden {
+            display: none;
+        }
+
+        .battlecard:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #000 0%, #222 100%);
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .card-header:hover {
+            background: linear-gradient(135deg, #111 0%, #333 100%);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .card-category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 0, 85, 0.2);
+            color: #ff0055;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(255, 0, 85, 0.3);
+        }
+
+        .expand-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .battlecard.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .battlecard.expanded .card-content {
+            max-height: 3000px;
+        }
+
+        .card-inner {
+            padding: 1.5rem;
+        }
+
+        .pricing {
+            background: linear-gradient(135deg, #ff0055 0%, #ff3377 100%);
+            color: #fff;
+            padding: 1rem 1.5rem;
+            margin: -1.5rem -1.5rem 1.5rem;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .pricing-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .section {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .strengths-weaknesses {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .strength-box, .weakness-box {
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid;
+        }
+
+        .strength-box {
+            background: #f0fdf4;
+            border-color: #86efac;
+        }
+
+        .weakness-box {
+            background: #fef2f2;
+            border-color: #fca5a5;
+        }
+
+        .strength-box h3, .weakness-box h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .strength-box h3 {
+            color: #16a34a;
+        }
+
+        .weakness-box h3 {
+            color: #dc2626;
+        }
+
+        .strength-box ul, .weakness-box ul {
+            list-style: none;
+        }
+
+        .strength-box li, .weakness-box li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .strength-box li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .weakness-box li:before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #dc2626;
+            font-weight: 700;
+        }
+
+        .info-box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            border-left: 4px solid;
+            margin-bottom: 1.5rem;
+        }
+
+        .win-strategy {
+            background: #fff7ed;
+            border-color: #fb923c;
+        }
+
+        .win-strategy .section-title {
+            color: #ea580c;
+        }
+
+        .win-strategy .quote {
+            font-style: italic;
+            color: #9a3412;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1rem;
+            border-left: 3px solid #fb923c;
+        }
+
+        .discovery {
+            background: #eff6ff;
+            border-color: #60a5fa;
+        }
+
+        .discovery .section-title {
+            color: #2563eb;
+        }
+
+        .discovery ul {
+            list-style: none;
+        }
+
+        .discovery li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            color: #1e40af;
+        }
+
+        .discovery li:before {
+            content: "?";
+            position: absolute;
+            left: 0;
+            color: #2563eb;
+            font-weight: 700;
+            background: #dbeafe;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .insight {
+            background: #faf5ff;
+            border-color: #c084fc;
+        }
+
+        .insight .section-title {
+            color: #9333ea;
+        }
+
+        .insight .insight-text {
+            font-weight: 600;
+            color: #6b21a8;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1200px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .strengths-weaknesses {
+                grid-template-columns: 1fr;
+            }
+
+            .shortcuts {
+                margin-left: 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #000;
+            color: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Citizen Enterprise <span class="accent">Competitive Battlecards</span></h1>
+            <p class="subtitle">Sales intelligence for winning against key competitors</p>
+        </div>
+    </header>
+
+    <div class="controls">
+        <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">All Competitors</button>
+            <button class="filter-btn" data-filter="Aggregator">Aggregators</button>
+            <button class="filter-btn" data-filter="Communication">Communication</button>
+            <button class="filter-btn" data-filter="Creator">Data Creators</button>
+        </div>
+        <button class="action-btn" id="expandAll">Expand All</button>
+        <button class="action-btn" id="collapseAll">Collapse All</button>
+        <div class="shortcuts">
+            Keyboard: <kbd>E</kbd> Expand All <kbd>C</kbd> Collapse All
+        </div>
+    </div>
+
+    <div class="cards-container">
+        <!-- Everbridge VCC -->
+        <div class="battlecard" data-category="Aggregator">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Everbridge VCC</div>
+                    <span class="card-category">Aggregator</span>
+                </div>
+                <div class="expand-icon">▼</div>
+            </div>
+            <div class="card-content">
+                <div class="card-inner">
+                    <div class="pricing">
+                        <div class="pricing-label">Annual Pricing</div>
+                        $50K - $200K+
+                    </div>
+
+                    <div class="strengths-weaknesses">
+                        <div class="strength-box">
+                            <h3>Strengths</h3>
+                            <ul>
+                                <li>Established enterprise relationships</li>
+                                <li>Full GSOC platform</li>
+                                <li>Mass notification capabilities</li>
+                                <li>Global coverage</li>
+                            </ul>
+                        </div>
+                        <div class="weakness-box">
+                            <h3>Weaknesses</h3>
+                            <ul>
+                                <li>Aggregator model (no proprietary data)</li>
+                                <li>10-20 minute lag time</li>
+                                <li>No hyperlocal intelligence</li>
+                                <li>Complex and expensive</li>
+                                <li>Not real-time</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box win-strategy">
+                        <div class="section-title">Win Strategy - Talk Track</div>
+                        <div class="quote">"They aggregate data you could access directly - just slower. We CREATE data through 20M+ users. 90 seconds vs 20 minutes = preventing vs responding."</div>
+                    </div>
+
+                    <div class="info-box discovery">
+                        <div class="section-title">Discovery Questions</div>
+                        <ul>
+                            <li>How critical is real-time vs 15-20 min lag?</li>
+                            <li>Need hyperlocal or city-wide?</li>
+                            <li>Full GSOC or best-in-class data?</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box insight">
+                        <div class="section-title">Key Insight</div>
+                        <div class="insight-text">Data Creator vs Aggregator - we create proprietary data, they aggregate public sources</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dataminr -->
+        <div class="battlecard" data-category="Aggregator">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Dataminr</div>
+                    <span class="card-category">Aggregator</span>
+                </div>
+                <div class="expand-icon">▼</div>
+            </div>
+            <div class="card-content">
+                <div class="card-inner">
+                    <div class="pricing">
+                        <div class="pricing-label">Annual Pricing</div>
+                        $96K - $480K
+                    </div>
+
+                    <div class="strengths-weaknesses">
+                        <div class="strength-box">
+                            <h3>Strengths</h3>
+                            <ul>
+                                <li>Twitter firehose access</li>
+                                <li>Global coverage</li>
+                                <li>AI signal detection</li>
+                                <li>Strong finance/media brand</li>
+                            </ul>
+                        </div>
+                        <div class="weakness-box">
+                            <h3>Weaknesses</h3>
+                            <ul>
+                                <li>Macro events not hyperlocal</li>
+                                <li>Social media dependent</li>
+                                <li>No 911/CAD integration</li>
+                                <li>Expensive ($96K+ annually)</li>
+                                <li>Not verified in real-time</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box win-strategy">
+                        <div class="section-title">Win Strategy - Talk Track</div>
+                        <div class="quote">"Excellent for global macro events, not hyperlocal verified incidents. We monitor 911 + 20M users for block-level verified incidents in 90 seconds. $20K vs $96K+."</div>
+                    </div>
+
+                    <div class="info-box discovery">
+                        <div class="section-title">Discovery Questions</div>
+                        <ul>
+                            <li>Hyperlocal or global macro?</li>
+                            <li>Ground-truth vs social signals?</li>
+                            <li>Need 911/CAD integration?</li>
+                            <li>Current spend?</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box insight">
+                        <div class="section-title">Key Insight</div>
+                        <div class="insight-text">Different use cases - they excel at global events, we own hyperlocal safety. Often complementary.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AlertMedia -->
+        <div class="battlecard" data-category="Communication">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">AlertMedia</div>
+                    <span class="card-category">Communication</span>
+                </div>
+                <div class="expand-icon">▼</div>
+            </div>
+            <div class="card-content">
+                <div class="card-inner">
+                    <div class="pricing">
+                        <div class="pricing-label">Annual Pricing</div>
+                        $3K - $15K
+                    </div>
+
+                    <div class="strengths-weaknesses">
+                        <div class="strength-box">
+                            <h3>Strengths</h3>
+                            <ul>
+                                <li>Easy mass notification</li>
+                                <li>Multi-channel (SMS/email/voice)</li>
+                                <li>Two-way communication</li>
+                                <li>Lower price point</li>
+                            </ul>
+                        </div>
+                        <div class="weakness-box">
+                            <h3>Weaknesses</h3>
+                            <ul>
+                                <li>No situational awareness data</li>
+                                <li>Manual threat monitoring</li>
+                                <li>Reactive not proactive</li>
+                                <li>No detection capabilities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box win-strategy">
+                        <div class="section-title">Win Strategy - Talk Track</div>
+                        <div class="quote">"They're communication, we're detection. We tell you about threats, they help you send messages. Use us WITH them - feed Citizen alerts into AlertMedia workflows."</div>
+                    </div>
+
+                    <div class="info-box discovery">
+                        <div class="section-title">Discovery Questions</div>
+                        <ul>
+                            <li>How do you monitor threats to trigger notifications?</li>
+                            <li>Who decides when to alert?</li>
+                            <li>What sources are you monitoring?</li>
+                            <li>How long does threat detection take?</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box insight">
+                        <div class="section-title">Key Insight</div>
+                        <div class="insight-text">Complementary not competitive - we integrate WITH AlertMedia</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Samdesk -->
+        <div class="battlecard" data-category="Aggregator">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Samdesk</div>
+                    <span class="card-category">Aggregator</span>
+                </div>
+                <div class="expand-icon">▼</div>
+            </div>
+            <div class="card-content">
+                <div class="card-inner">
+                    <div class="pricing">
+                        <div class="pricing-label">Annual Pricing</div>
+                        $30K - $80K
+                    </div>
+
+                    <div class="strengths-weaknesses">
+                        <div class="strength-box">
+                            <h3>Strengths</h3>
+                            <ul>
+                                <li>Business disruption focus</li>
+                                <li>Multi-source aggregation</li>
+                                <li>Supply chain monitoring</li>
+                                <li>Clean UI</li>
+                            </ul>
+                        </div>
+                        <div class="weakness-box">
+                            <h3>Weaknesses</h3>
+                            <ul>
+                                <li>Aggregator model</li>
+                                <li>Limited hyperlocal coverage</li>
+                                <li>No 911/CAD integration</li>
+                                <li>5-10 minute lag time</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box win-strategy">
+                        <div class="section-title">Win Strategy - Talk Track</div>
+                        <div class="quote">"They aggregate public sources - Google Alerts but faster. We CREATE data via 20M+ users + 911. Active shooter near facility = 90 seconds vs 10+ minutes when it hits Twitter."</div>
+                    </div>
+
+                    <div class="info-box discovery">
+                        <div class="section-title">Discovery Questions</div>
+                        <ul>
+                            <li>What disruptions matter most?</li>
+                            <li>How critical is speed?</li>
+                            <li>Physical locations or supply chain?</li>
+                            <li>Verified or aggregated data preference?</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box insight">
+                        <div class="section-title">Key Insight</div>
+                        <div class="insight-text">West Coast U case study - chose Citizen because 8-10 minutes faster on campus safety</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rave Mobile Safety -->
+        <div class="battlecard" data-category="Communication">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Rave Mobile Safety</div>
+                    <span class="card-category">Communication</span>
+                </div>
+                <div class="expand-icon">▼</div>
+            </div>
+            <div class="card-content">
+                <div class="card-inner">
+                    <div class="pricing">
+                        <div class="pricing-label">Annual Pricing</div>
+                        $5K - $25K
+                    </div>
+
+                    <div class="strengths-weaknesses">
+                        <div class="strength-box">
+                            <h3>Strengths</h3>
+                            <ul>
+                                <li>K-12/healthcare presence</li>
+                                <li>Panic button hardware</li>
+                                <li>Direct 911 integration</li>
+                                <li>Campus-specific features</li>
+                            </ul>
+                        </div>
+                        <div class="weakness-box">
+                            <h3>Weaknesses</h3>
+                            <ul>
+                                <li>No off-campus detection</li>
+                                <li>Reactive only (button-push)</li>
+                                <li>Internal threats only</li>
+                                <li>No broader situational awareness</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box win-strategy">
+                        <div class="section-title">Win Strategy - Talk Track</div>
+                        <div class="quote">"Excellent for ON-campus emergencies. But threats APPROACHING campus? They can't see those. We're early warning for the area around facilities. Use both: Citizen for detection, Rave for response."</div>
+                    </div>
+
+                    <div class="info-box discovery">
+                        <div class="section-title">Discovery Questions</div>
+                        <ul>
+                            <li>How monitor threats outside perimeter?</li>
+                            <li>Response for nearby off-campus events?</li>
+                            <li>Awareness for approaching threats?</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box insight">
+                        <div class="section-title">Key Insight</div>
+                        <div class="insight-text">Layer security - need BOTH panic buttons (Rave) AND external monitoring (Citizen)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crisis24 -->
+        <div class="battlecard" data-category="Aggregator">
+            <div class="card-header">
+                <div>
+                    <div class="card-title">Crisis24</div>
+                    <span class="card-category">Aggregator</span>
+                </div>
+                <div class="expand-icon">▼</div>
+            </div>
+            <div class="card-content">
+                <div class="card-inner">
+                    <div class="pricing">
+                        <div class="pricing-label">Annual Pricing</div>
+                        $50K - $150K+
+                    </div>
+
+                    <div class="strengths-weaknesses">
+                        <div class="strength-box">
+                            <h3>Strengths</h3>
+                            <ul>
+                                <li>Global coverage (180+ countries)</li>
+                                <li>24/7 analyst team</li>
+                                <li>Travel risk assessments</li>
+                                <li>Geopolitical expertise</li>
+                            </ul>
+                        </div>
+                        <div class="weakness-box">
+                            <h3>Weaknesses</h3>
+                            <ul>
+                                <li>Travel not facilities focus</li>
+                                <li>Macro not hyperlocal</li>
+                                <li>Expensive analyst model</li>
+                                <li>Human delay in reporting</li>
+                                <li>No US hyperlocal coverage</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box win-strategy">
+                        <div class="section-title">Win Strategy - Talk Track</div>
+                        <div class="quote">"Gold standard for protecting traveling execs abroad. But for US facilities in real-time? Not built for that. Macro country ratings vs block-level 90-second alerts. Use BOTH - Crisis24 for international travel, Citizen for domestic facilities."</div>
+                    </div>
+
+                    <div class="info-box discovery">
+                        <div class="section-title">Discovery Questions</div>
+                        <ul>
+                            <li>US facilities or international travelers?</li>
+                            <li>Geopolitical risk or real-time incidents?</li>
+                            <li>Domestic vs international concerns?</li>
+                            <li>Speed vs analyst curation?</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box insight">
+                        <div class="section-title">Key Insight</div>
+                        <div class="insight-text">Different markets - Crisis24 = international travel, Citizen = domestic facilities. Rarely head-to-head.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Card expansion/collapse
+        document.querySelectorAll('.card-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const card = header.parentElement;
+                card.classList.toggle('expanded');
+            });
+        });
+
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.battlecard');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active state
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filter = button.dataset.filter;
+
+                // Filter cards
+                cards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                showToast(`Filtering: ${filter === 'all' ? 'All Competitors' : filter}`);
+            });
+        });
+
+        // Expand/Collapse All
+        document.getElementById('expandAll').addEventListener('click', () => {
+            cards.forEach(card => {
+                if (!card.classList.contains('hidden')) {
+                    card.classList.add('expanded');
+                }
+            });
+            showToast('Expanded all visible cards');
+        });
+
+        document.getElementById('collapseAll').addEventListener('click', () => {
+            cards.forEach(card => card.classList.remove('expanded'));
+            showToast('Collapsed all cards');
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            if (e.key.toLowerCase() === 'e') {
+                document.getElementById('expandAll').click();
+            } else if (e.key.toLowerCase() === 'c') {
+                document.getElementById('collapseAll').click();
+            }
+        });
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        // Initial load animation
+        window.addEventListener('load', () => {
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 50);
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
