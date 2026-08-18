@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battlecard Playbook - Citizen Enterprise Sales Enablement</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: #fafafa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #000;
+            color: #fff;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #999;
+            font-size: 1.1rem;
+        }
+
+        .accent {
+            color: #ff0055;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, #ff0055 0%, #ff3377 100%);
+            color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 16px rgba(255, 0, 85, 0.2);
+        }
+
+        .intro h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+
+        .section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-number {
+            background: #ff0055;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .section h3 {
+            font-size: 1.15rem;
+            margin: 1.5rem 0 0.75rem;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        ul {
+            margin: 0.75rem 0 1.25rem 1.5rem;
+        }
+
+        ul li {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .box {
+            padding: 1.25rem;
+            border-radius: 8px;
+            border-left: 4px solid;
+            margin: 1.25rem 0;
+        }
+
+        .do-box {
+            background: #f0fdf4;
+            border-color: #16a34a;
+        }
+
+        .do-box h4 {
+            color: #16a34a;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .do-box ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .do-box li {
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .do-box li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .dont-box {
+            background: #fef2f2;
+            border-color: #dc2626;
+        }
+
+        .dont-box h4 {
+            color: #dc2626;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dont-box ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .dont-box li {
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .dont-box li:before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #dc2626;
+            font-weight: 700;
+        }
+
+        .tactic-box {
+            background: #fff7ed;
+            border-color: #fb923c;
+        }
+
+        .tactic-box h4 {
+            color: #ea580c;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-box {
+            background: #eff6ff;
+            border-color: #60a5fa;
+        }
+
+        .question-box h4 {
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-box ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .question-box li {
+            padding-left: 1.5rem;
+            position: relative;
+            color: #1e40af;
+        }
+
+        .question-box li:before {
+            content: "?";
+            position: absolute;
+            left: 0;
+            color: #2563eb;
+            font-weight: 700;
+            background: #dbeafe;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .tip-box {
+            background: #faf5ff;
+            border-color: #c084fc;
+        }
+
+        .tip-box h4 {
+            color: #9333ea;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #666;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            padding: 1rem 1.5rem;
+            border-left: 4px solid #ff0055;
+            background: #f9f9f9;
+            margin: 1rem 0;
+        }
+
+        .framework-highlight {
+            background: linear-gradient(135deg, #000 0%, #222 100%);
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .framework-highlight h4 {
+            color: #ff0055;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .framework-highlight p {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .framework-highlight strong {
+            color: #ff0055;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .category-card {
+            background: #f9f9f9;
+            padding: 1.25rem;
+            border-radius: 8px;
+            border: 2px solid #e5e5e5;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            border-color: #ff0055;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 0, 85, 0.15);
+        }
+
+        .category-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #000;
+            font-weight: 700;
+        }
+
+        .category-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+            color: #666;
+        }
+
+        kbd {
+            background: #000;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 0.25rem 0.6rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin: 0 0.25rem;
+            display: inline-block;
+        }
+
+        .objection {
+            background: #fff;
+            border: 2px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.75rem 0;
+        }
+
+        .objection-text {
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 0.5rem;
+        }
+
+        .response-text {
+            color: #16a34a;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .response-text:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+            color: #ff0055;
+        }
+
+        .print-note {
+            background: #fffbeb;
+            border: 2px solid #fbbf24;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .print-note p {
+            margin: 0;
+            color: #92400e;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .section h2 {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+            }
+
+            .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+
+            .section:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Battlecard <span class="accent">Playbook</span></h1>
+            <p class="subtitle">Sales enablement guide for live competitive calls</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="intro">
+            <h2>Your Competitive Advantage</h2>
+            <p>This playbook teaches you how to use the Citizen Enterprise competitive battlecards during live sales calls. Master these tactics to confidently position against any competitor, turn objections into opportunities, and close deals faster. The battlecards contain the intelligence—this guide shows you how to deploy it.</p>
+        </div>
+
+        <!-- Section 1: Quick Start -->
+        <div class="section">
+            <h2><span class="section-number">1</span> Quick Start</h2>
+            <p>Get set up in 60 seconds so the battlecards are ready when you need them.</p>
+
+            <div class="box tactic-box">
+                <h4>Setup Steps</h4>
+                <ul>
+                    <li><strong>Bookmark it:</strong> Add <code>competitive-battlecards.html</code> to your browser bookmarks bar as "Battlecards"</li>
+                    <li><strong>Second monitor:</strong> Open on your second screen during calls—keep it visible but out of camera view</li>
+                    <li><strong>Mobile backup:</strong> Save the file to your phone for quick reference in the field</li>
+                    <li><strong>Print key cards:</strong> Print cards for your top 3 competitors and keep them at your desk</li>
+                </ul>
+            </div>
+
+            <div class="box tip-box">
+                <h4>Keyboard Shortcuts</h4>
+                <ul>
+                    <li><kbd>E</kbd> = Expand all cards (use during pre-call prep)</li>
+                    <li><kbd>C</kbd> = Collapse all (clean view between calls)</li>
+                    <li>Click any card header to toggle individual cards</li>
+                    <li>Filter buttons for quick category navigation</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 2: When to Use Battlecards -->
+        <div class="section">
+            <h2><span class="section-number">2</span> When to Use Battlecards</h2>
+            <p>Four key moments to leverage competitive intelligence:</p>
+
+            <div class="grid-2">
+                <div class="category-card">
+                    <h4>During Discovery</h4>
+                    <p>When prospect mentions they're evaluating competitors or using existing tools. Pull up the card mid-call to reference discovery questions.</p>
+                </div>
+                <div class="category-card">
+                    <h4>Pre-Call Prep</h4>
+                    <p>If you know from research they're using Everbridge, Dataminr, etc. Review the card 5 minutes before the call to refresh positioning.</p>
+                </div>
+                <div class="category-card">
+                    <h4>Proposal Defense</h4>
+                    <p>When they're comparing your proposal to competitors. Use talk tracks verbatim to frame the comparison around your strengths.</p>
+                </div>
+                <div class="category-card">
+                    <h4>RFP Responses</h4>
+                    <p>When responding to RFPs that mention competitors by name. Mine the "Win Strategy" sections for positioning language.</p>
+                </div>
+            </div>
+
+            <div class="box do-box">
+                <h4>Best Practices</h4>
+                <ul>
+                    <li>Review relevant cards before EVERY call where you know the competitive landscape</li>
+                    <li>Keep them open during discovery calls—you never know who they'll mention</li>
+                    <li>Reference specific pricing intel when defending your $20K price point</li>
+                    <li>Use the discovery questions to guide the conversation, not interrogate</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 3: The Framework -->
+        <div class="section">
+            <h2><span class="section-number">3</span> The Framework: Data Creator vs Aggregator</h2>
+            <p>This is the single most important concept for competitive positioning. Master this framework and you'll win more deals.</p>
+
+            <div class="framework-highlight">
+                <h4>The Core Positioning</h4>
+                <p><strong>Citizen creates proprietary data.</strong> We have 20M+ users on the ground reporting in real-time, plus direct 911/CAD integrations. This data doesn't exist anywhere else.</p>
+                <p><strong>Competitors aggregate existing data.</strong> They scrape Twitter, news feeds, and public sources—data you could access yourself, just slower.</p>
+                <p><strong>This is our defensible moat.</strong> They can't replicate 20M users. We can't be commoditized by better aggregation algorithms.</p>
+            </div>
+
+            <div class="quote">
+                "The difference between 90 seconds and 20 minutes isn't technology—it's whether you CREATE the data or wait for someone else to publish it. We create. They aggregate. That's the game."
+            </div>
+
+            <div class="box tactic-box">
+                <h4>How to Use This Framework</h4>
+                <ul>
+                    <li><strong>Early in discovery:</strong> "Are you currently creating proprietary safety data, or aggregating public sources?"</li>
+                    <li><strong>When they mention Everbridge/Dataminr/Samdesk:</strong> "Great tools for aggregation. Do you need data creation capabilities for faster detection?"</li>
+                    <li><strong>In proposals:</strong> "Our moat: proprietary data from 20M users + 911 integration. Can't be replicated through better scraping."</li>
+                    <li><strong>During pricing objections:</strong> "You're paying for proprietary data creation, not aggregated feeds you could access directly."</li>
+                </ul>
+            </div>
+
+            <div class="box do-box">
+                <h4>Use This Framing in EVERY Competitive Conversation</h4>
+                <ul>
+                    <li>Position around the data source, not features</li>
+                    <li>Emphasize "created" vs "aggregated" at least 2-3 times per call</li>
+                    <li>Connect data creation to speed advantage (90 seconds vs 10-20 minutes)</li>
+                    <li>Make it about their use case: "For your facilities, do you need to know NOW or in 15 minutes?"</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 4: Live Call Tactics -->
+        <div class="section">
+            <h2><span class="section-number">4</span> Live Call Tactics</h2>
+            <p>How to deploy competitive intelligence during conversations without sounding defensive or aggressive.</p>
+
+            <div class="box dont-box">
+                <h4>Don't</h4>
+                <ul>
+                    <li>Bash competitors directly ("They're terrible at X")</li>
+                    <li>Make claims you can't back up with data</li>
+                    <li>Sound defensive when they mention competitor names</li>
+                    <li>Interrupt when they're explaining their current setup</li>
+                    <li>Use the battlecards as a script—use them as a guide</li>
+                </ul>
+            </div>
+
+            <div class="box do-box">
+                <h4>Do</h4>
+                <ul>
+                    <li>Position around use cases and outcomes, not feature comparison</li>
+                    <li>Ask discovery questions from the cards to understand their needs</li>
+                    <li>Use the talk tracks verbatim (they're battle-tested with real customers)</li>
+                    <li>Emphasize complementary positioning when appropriate (AlertMedia, Rave, Crisis24)</li>
+                    <li>Lead with speed advantage: "90 seconds vs 10-20 minutes when it matters most"</li>
+                    <li>Acknowledge competitor strengths before pivoting to differentiation</li>
+                </ul>
+            </div>
+
+            <div class="box tactic-box">
+                <h4>The Acknowledge-Pivot Framework</h4>
+                <ul>
+                    <li><strong>Acknowledge:</strong> "Everbridge is a strong enterprise platform with great global coverage."</li>
+                    <li><strong>Pivot:</strong> "The question is whether your use case requires real-time proprietary data or aggregated feeds with 15-20 minute lag."</li>
+                    <li><strong>Discovery:</strong> "Walk me through what happens when there's an active shooter near one of your facilities—how quickly do you need to know?"</li>
+                </ul>
+            </div>
+
+            <div class="quote">
+                "Great, I'm glad you're already using AlertMedia for communications. The question is—how are you currently detecting threats to send those alerts? That's where we come in. We integrate WITH AlertMedia to trigger the notifications automatically."
+            </div>
+        </div>
+
+        <!-- Section 5: Category-Specific Strategies -->
+        <div class="section">
+            <h2><span class="section-number">5</span> Category-Specific Strategies</h2>
+            <p>Different competitor types require different approaches. Here's how to adjust your tactics.</p>
+
+            <h3>vs Aggregators (Everbridge, Dataminr, Samdesk, Crisis24)</h3>
+            <div class="box tactic-box">
+                <h4>Lead With</h4>
+                <ul>
+                    <li><strong>Speed:</strong> "90 seconds vs 10-20 minutes—preventing vs responding"</li>
+                    <li><strong>Data moat:</strong> "We CREATE proprietary data (20M users + 911), they aggregate public sources"</li>
+                    <li><strong>Hyperlocal:</strong> "Block-level precision vs city-wide macro events"</li>
+                    <li><strong>Verification:</strong> "Ground truth from 911/CAD vs social media signals"</li>
+                </ul>
+            </div>
+            <div class="box question-box">
+                <h4>Key Discovery Questions</h4>
+                <ul>
+                    <li>How critical is real-time detection vs 15-20 minute lag for your use case?</li>
+                    <li>Do you need hyperlocal (block-level) or city-wide awareness?</li>
+                    <li>Are you satisfied with aggregated public sources or need proprietary data?</li>
+                    <li>What's your current alert speed for incidents near your facilities?</li>
+                </ul>
+            </div>
+
+            <h3>vs Communication Tools (AlertMedia, Rave)</h3>
+            <div class="box do-box">
+                <h4>Position as Complementary</h4>
+                <ul>
+                    <li>"They're communication, we're detection—different problems"</li>
+                    <li>"We integrate WITH them—Citizen alerts trigger AlertMedia workflows"</li>
+                    <li>"You still need both: detection (us) + communication (them)"</li>
+                    <li>"They send messages. We tell you WHAT to send messages about."</li>
+                </ul>
+            </div>
+            <div class="box question-box">
+                <h4>Key Discovery Questions</h4>
+                <ul>
+                    <li>How are you currently monitoring threats to trigger your AlertMedia notifications?</li>
+                    <li>Who decides when to send an alert, and what sources do they monitor?</li>
+                    <li>How long does it take from incident happening to you knowing about it?</li>
+                    <li>Are you monitoring off-campus/off-facility threats approaching your locations?</li>
+                </ul>
+            </div>
+            <div class="quote">
+                "Love that you're using Rave for on-campus emergencies. But what about threats APPROACHING campus? We're the early warning system for the area around your facilities. Layer us together."
+            </div>
+
+            <h3>vs Hybrid Competitors</h3>
+            <div class="box tactic-box">
+                <h4>Identify Their Primary Value Prop</h4>
+                <ul>
+                    <li>Are they primarily aggregators with some communication features? → Use aggregator strategy</li>
+                    <li>Are they primarily communication with basic threat feeds? → Use communication strategy</li>
+                    <li>Ask: "What do you use [competitor] for most—detection or notification?"</li>
+                    <li>Position around their weakness, not their claimed strength</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 6: Discovery Question Playbook -->
+        <div class="section">
+            <h2><span class="section-number">6</span> Discovery Question Playbook</h2>
+            <p>How to use battlecard questions strategically to uncover needs and position your solution.</p>
+
+            <div class="box tactic-box">
+                <h4>Strategic Timing</h4>
+                <ul>
+                    <li><strong>Ask early:</strong> Questions help you understand their evaluation criteria before pitching</li>
+                    <li><strong>Listen actively:</strong> Their answers reveal pain points that map to your strengths</li>
+                    <li><strong>Take notes:</strong> Use their language in your pitch ("You mentioned 15-minute lag was a problem...")</li>
+                    <li><strong>Customize:</strong> Adjust your demo/proposal based on what you learn</li>
+                </ul>
+            </div>
+
+            <div class="box question-box">
+                <h4>Universal Questions (Ask on Every Call)</h4>
+                <ul>
+                    <li>Walk me through what happens today when there's an incident near one of your facilities</li>
+                    <li>How quickly do you need to know about threats? Minutes? Seconds?</li>
+                    <li>What sources are you currently monitoring for situational awareness?</li>
+                    <li>Who's responsible for watching those sources and making decisions?</li>
+                    <li>What's the process from incident occurring to your team being notified?</li>
+                </ul>
+            </div>
+
+            <div class="box do-box">
+                <h4>How to Use Their Answers</h4>
+                <ul>
+                    <li><strong>"We monitor news feeds and social media"</strong> → "So you're aggregating public sources. What if we could create proprietary data for you?"</li>
+                    <li><strong>"Takes 10-15 minutes usually"</strong> → "What if you knew in 90 seconds? How would that change your response?"</li>
+                    <li><strong>"We have someone watch Twitter"</strong> → "What happens when that person is in a meeting or after hours?"</li>
+                    <li><strong>"We use [competitor]"</strong> → Pull up that battlecard and reference the discovery questions</li>
+                </ul>
+            </div>
+
+            <div class="quote">
+                "The best salespeople use questions to co-create the problem. Don't pitch Citizen. Ask questions that make THEM realize they need faster, more verified data. Then show them how we deliver it."
+            </div>
+        </div>
+
+        <!-- Section 7: Common Objections & Responses -->
+        <div class="section">
+            <h2><span class="section-number">7</span> Common Objections & Responses</h2>
+            <p>Battle-tested responses to the objections you'll hear most often. Use these verbatim.</p>
+
+            <div class="objection">
+                <div class="objection-text">"We're already using [competitor]"</div>
+                <div class="response-text">"That's great! Are you satisfied with the speed and coverage? I ask because many customers use us WITH [competitor]—we handle hyperlocal real-time detection, they handle [communication/global events]. They're complementary, not competitive. Would you be open to seeing how we integrate together?"</div>
+            </div>
+
+            <div class="objection">
+                <div class="objection-text">"They offered us a free trial with gift cards for participation"</div>
+                <div class="response-text">"We're happy to do a trial as well. What matters though is the data quality and speed when you actually need it in an emergency. Let me ask—when you tested them, how did they perform on detection speed for hyperlocal incidents? We average 90 seconds. What were you seeing from them?"</div>
+            </div>
+
+            <div class="objection">
+                <div class="objection-text">"You're more expensive than AlertMedia/Rave"</div>
+                <div class="response-text">"Different solutions for different problems. They're communication platforms—sending messages. We're detection and situational awareness—knowing WHAT to send messages about. Most customers use both: Citizen for detection, AlertMedia for communication. We actually integrate together. Are you currently monitoring threats to trigger your AlertMedia alerts?"</div>
+            </div>
+
+            <div class="objection">
+                <div class="objection-text">"Everbridge/Dataminr is an enterprise standard"</div>
+                <div class="response-text">"They're excellent enterprise platforms, no question. The question is whether you need proprietary data creation or aggregated feeds. They aggregate Twitter and news—data that's publicly available, just faster. We create proprietary data through 20M users and 911 integration. For hyperlocal incidents, we're 10-20 minutes faster because we're not waiting for someone to tweet about it. What's more valuable for your use case?"</div>
+            </div>
+
+            <div class="objection">
+                <div class="objection-text">"We need global coverage, you're US-only"</div>
+                <div class="response-text">"Correct, we're focused on the US market where we have our proprietary data network. For global coverage, Crisis24 or Dataminr are great options. Many customers use us for US facilities (where we're faster and more accurate) and Crisis24 for international travel. Are most of your critical facilities domestic or international?"</div>
+            </div>
+
+            <div class="objection">
+                <div class="objection-text">"We don't have budget for another tool"</div>
+                <div class="response-text">"I understand. Let me ask—what's the cost of NOT knowing about an incident for 15-20 minutes? One prevented evacuation, one avoided liability issue, one protected employee—what's that worth? We're $20K annually. If you're already spending $50K+ on Everbridge, we're a fraction of that cost for significantly faster detection. Want to walk through an ROI scenario specific to your facilities?"</div>
+            </div>
+
+            <div class="box tip-box">
+                <h4>Pro Tip: The Pause</h4>
+                <p>After answering an objection, PAUSE. Let them respond. Don't over-explain or get defensive. Confident silence shows you believe in your answer.</p>
+            </div>
+        </div>
+
+        <!-- Section 8: Keyboard Shortcuts & Features -->
+        <div class="section">
+            <h2><span class="section-number">8</span> Keyboard Shortcuts & Features</h2>
+            <p>Master these shortcuts to navigate the battlecards efficiently during live calls.</p>
+
+            <div class="grid-3">
+                <div class="category-card">
+                    <h4><kbd>E</kbd> Expand All</h4>
+                    <p>Opens all competitor cards. Use during pre-call prep to review all content quickly.</p>
+                </div>
+                <div class="category-card">
+                    <h4><kbd>C</kbd> Collapse All</h4>
+                    <p>Closes all cards. Use to clean up the view between calls or when sharing screen.</p>
+                </div>
+                <div class="category-card">
+                    <h4>Click Headers</h4>
+                    <p>Click any card header to toggle that specific competitor. Use mid-call when prospect mentions a name.</p>
+                </div>
+            </div>
+
+            <div class="box tactic-box">
+                <h4>Filter Buttons</h4>
+                <ul>
+                    <li><strong>All Competitors:</strong> Shows every battlecard (default view)</li>
+                    <li><strong>Aggregators:</strong> Filter to just Everbridge, Dataminr, Samdesk, Crisis24</li>
+                    <li><strong>Communication:</strong> Filter to AlertMedia and Rave Mobile Safety</li>
+                    <li><strong>Data Creators:</strong> Filter to competitors who create original data</li>
+                </ul>
+            </div>
+
+            <div class="box tip-box">
+                <h4>Navigation Tips</h4>
+                <ul>
+                    <li>Keep the page scrolled to show filter buttons during calls for quick access</li>
+                    <li>Use browser's Find function (Ctrl+F / Cmd+F) to search for keywords like "pricing" or "911"</li>
+                    <li>Bookmark specific sections using browser bookmarks if you sell against 1-2 competitors repeatedly</li>
+                    <li>The cards are ordered by market category for logical grouping</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 9: Pro Tips -->
+        <div class="section">
+            <h2><span class="section-number">9</span> Pro Tips</h2>
+            <p>Advanced tactics from top performers who consistently win competitive deals.</p>
+
+            <div class="box tip-box">
+                <h4>Print the Key Insights</h4>
+                <ul>
+                    <li>Each battlecard has a "Key Insight" section—the one-liner that wins the deal</li>
+                    <li>Print these for your top 3 competitors and tape to your monitor</li>
+                    <li>Memorize them. They're designed to be said verbatim in any conversation</li>
+                    <li>Example: "Data Creator vs Aggregator—we create proprietary data, they aggregate public sources"</li>
+                </ul>
+            </div>
+
+            <div class="box tip-box">
+                <h4>Share in Follow-Up Emails</h4>
+                <ul>
+                    <li>After calls, copy relevant battlecard sections into follow-up emails</li>
+                    <li>Example: "As we discussed, here's how we compare to Dataminr for hyperlocal coverage..."</li>
+                    <li>Attach specific talk tracks as "positioning frameworks" for their internal champion to use</li>
+                    <li>This arms them to sell internally when you're not in the room</li>
+                </ul>
+            </div>
+
+            <div class="box tip-box">
+                <h4>Update the Team</h4>
+                <ul>
+                    <li>When you learn new competitive intel (pricing changes, new features, customer wins/losses), share in #b2bsalesteam</li>
+                    <li>Tag @sales-ops with "Battlecard update: [Competitor]—[what you learned]"</li>
+                    <li>The battlecards are living documents. Your field intelligence makes them better</li>
+                    <li>Monthly battlecard review meetings to share what's working and what needs updating</li>
+                </ul>
+            </div>
+
+            <div class="box tip-box">
+                <h4>Use Pricing Intel Strategically</h4>
+                <ul>
+                    <li>Each battlecard shows competitor annual pricing ranges</li>
+                    <li>Use this to anchor your $20K positioning: "We're $20K vs their $96K-$480K"</li>
+                    <li>When they say we're expensive, ask: "Expensive compared to what? What are you currently paying for detection?"</li>
+                    <li>Position as "enterprise-grade data at mid-market pricing"</li>
+                </ul>
+            </div>
+
+            <div class="box tactic-box">
+                <h4>The Champion Enablement Move</h4>
+                <p>When you find an internal champion, send them the battlecard PDF (export via browser print to PDF):</p>
+                <ul>
+                    <li>"Here's our competitive positioning guide. Feel free to use any of this language in your internal discussions."</li>
+                    <li>This arms them to defend Citizen when you're not in the room</li>
+                    <li>Highlight the talk tracks they can use verbatim with their CFO/CTO/CISO</li>
+                    <li>Best champions are those who can articulate your differentiation as well as you can</li>
+                </ul>
+            </div>
+
+            <div class="quote">
+                "The deal is won or lost in conversations you're not part of. Your job is to arm your champion with language so bulletproof they can defend you to their CFO at 11pm on a Thursday."
+            </div>
+        </div>
+
+        <!-- Section 10: Feedback Loop -->
+        <div class="section">
+            <h2><span class="section-number">10</span> Feedback Loop</h2>
+            <p>Competitive intelligence is only valuable if it stays current. Here's how you help keep these battlecards sharp.</p>
+
+            <div class="box do-box">
+                <h4>Share New Objections</h4>
+                <ul>
+                    <li>If you hear a new objection not covered in the battlecards, share it in #b2bsalesteam immediately</li>
+                    <li>Include: the competitor, the objection verbatim, and how you responded</li>
+                    <li>Sales ops will test responses and add winners to the battlecards</li>
+                    <li>This creates a compounding knowledge advantage for the whole team</li>
+                </ul>
+            </div>
+
+            <div class="box do-box">
+                <h4>Flag Competitor Changes</h4>
+                <ul>
+                    <li>New pricing you hear about? Share it.</li>
+                    <li>Competitor changed positioning or launched new features? Flag it.</li>
+                    <li>Lost a deal to a competitor for a new reason? Document it.</li>
+                    <li>Heard a prospect mention competitor weakness you haven't seen before? Share it.</li>
+                </ul>
+            </div>
+
+            <div class="box question-box">
+                <h4>Win/Loss Reasons</h4>
+                <ul>
+                    <li>When you WIN against a competitor: What was the deciding factor? Which talk track sealed it?</li>
+                    <li>When you LOSE to a competitor: What did they do better? What objection couldn't you overcome?</li>
+                    <li>This intel directly informs battlecard updates and new positioning strategies</li>
+                    <li>Quarterly win/loss reviews help identify patterns across the team</li>
+                </ul>
+            </div>
+
+            <div class="box tactic-box">
+                <h4>How to Submit Feedback</h4>
+                <ul>
+                    <li><strong>Slack:</strong> Post in #b2bsalesteam with tag @sales-ops</li>
+                    <li><strong>Template:</strong> "Battlecard feedback - [Competitor]: [what you learned] | [context/source]"</li>
+                    <li><strong>Weekly:</strong> Sales ops reviews all feedback and updates battlecards monthly</li>
+                    <li><strong>Recognition:</strong> Top contributors get highlighted in team meetings and influence strategy</li>
+                </ul>
+            </div>
+
+            <div class="framework-highlight">
+                <h4>The Compounding Advantage</h4>
+                <p>Every deal you run teaches you something new. Every competitor interaction reveals their strategy. When you share that knowledge, the entire team gets smarter.</p>
+                <p><strong>Your experience</strong> + <strong>team's experience</strong> + <strong>continuous updates</strong> = <strong>unfair competitive advantage</strong></p>
+            </div>
+
+            <div class="quote">
+                "Competitive intelligence depreciates daily. The battlecards from 6 months ago are worth 50% less if they haven't been updated. Your field reports are what keep them sharp. Share what you learn."
+            </quote>
+        </div>
+
+        <!-- Print Note -->
+        <div class="print-note">
+            <p>💡 Print this playbook or bookmark it alongside your competitive battlecards for quick reference during calls</p>
+        </div>
+    </div>
+</body>
+</html>
